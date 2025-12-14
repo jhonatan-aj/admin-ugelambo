@@ -7,7 +7,21 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   fields: [
-    // Email added by default
-    // Add more fields as needed
+    {
+      name: 'role',
+      type: 'select',
+      required: true,
+      defaultValue: 'especialista',
+      label: 'Rol',
+      options: [
+        { label: 'Administrador', value: 'admin' },
+        { label: 'Especialista (Pedagógico)', value: 'especialista' },
+        { label: 'RRHH', value: 'rrhh' },
+        { label: 'Integridad', value: 'integridad' },
+      ],
+      admin: {
+        description: 'Define los permisos de acceso del usuario',
+      },
+    },
   ],
 }

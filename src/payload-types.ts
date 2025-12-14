@@ -69,6 +69,11 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    personal: Personal;
+    especialistas: Especialista;
+    fortalecimiento: Fortalecimiento;
+    'noticias-modal': NoticiasModal;
+    noticiaintegridads: Noticiaintegridad;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +83,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    personal: PersonalSelect<false> | PersonalSelect<true>;
+    especialistas: EspecialistasSelect<false> | EspecialistasSelect<true>;
+    fortalecimiento: FortalecimientoSelect<false> | FortalecimientoSelect<true>;
+    'noticias-modal': NoticiasModalSelect<false> | NoticiasModalSelect<true>;
+    noticiaintegridads: NoticiaintegridadsSelect<false> | NoticiaintegridadsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,6 +96,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
+  fallbackLocale: null;
   globals: {};
   globalsSelect: {};
   locale: null;
@@ -121,6 +132,10 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
+  /**
+   * Define los permisos de acceso del usuario
+   */
+  role: 'admin' | 'especialista' | 'rrhh' | 'integridad';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -160,6 +175,113 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "personal".
+ */
+export interface Personal {
+  id: string;
+  nombre: string;
+  cargo: string;
+  area: 'direccion' | 'rrhh' | 'aga' | 'agi' | 'agp';
+  foto?: (string | null) | Media;
+  /**
+   * Menor número = aparece primero
+   */
+  orden?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "especialistas".
+ */
+export interface Especialista {
+  id: string;
+  nombre: string;
+  nivel: 'inicial' | 'primaria' | 'secundaria' | 'ceba' | 'pronoi';
+  foto?: (string | null) | Media;
+  presentacion?: string | null;
+  colegios?:
+    | {
+        ubicacion: string;
+        colegio: string;
+        nivel_modalidad: string;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fortalecimiento".
+ */
+export interface Fortalecimiento {
+  id: string;
+  titulo: string;
+  descripcion?: string | null;
+  fecha: string;
+  area: 'inicial' | 'primaria' | 'secundaria' | 'pronoi' | 'ceba';
+  tipo: 'Curso' | 'Charla' | 'Taller' | 'Capacitacion';
+  /**
+   * URL de Google Drive u otro servicio de almacenamiento
+   */
+  linkRecursos?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "noticias-modal".
+ */
+export interface NoticiasModal {
+  id: string;
+  titulo: string;
+  imagen: string | Media;
+  /**
+   * Desmarcar para ocultar temporalmente sin eliminar
+   */
+  activo?: boolean | null;
+  /**
+   * Menor número = aparece primero
+   */
+  orden?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Gestiona las noticias del área de Integridad y Transparencia
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "noticiaintegridads".
+ */
+export interface Noticiaintegridad {
+  id: string;
+  /**
+   * Título que aparecerá en la tarjeta y página de detalle
+   */
+  titulo: string;
+  /**
+   * Contenido completo de la noticia. En las tarjetas solo se mostrará un extracto.
+   */
+  descripcion: string;
+  fecha: string;
+  /**
+   * URL de la imagen que aparecerá en la tarjeta y página de detalle (ej: /ruta/imagen.jpg o URL completa)
+   */
+  imagen?: string | null;
+  /**
+   * Área a la que pertenece esta noticia
+   */
+  area: 'integridad' | 'general';
+  /**
+   * Desmarcar para ocultar la noticia sin eliminarla
+   */
+  activo?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -189,6 +311,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'personal';
+        value: string | Personal;
+      } | null)
+    | ({
+        relationTo: 'especialistas';
+        value: string | Especialista;
+      } | null)
+    | ({
+        relationTo: 'fortalecimiento';
+        value: string | Fortalecimiento;
+      } | null)
+    | ({
+        relationTo: 'noticias-modal';
+        value: string | NoticiasModal;
+      } | null)
+    | ({
+        relationTo: 'noticiaintegridads';
+        value: string | Noticiaintegridad;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -237,6 +379,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -271,6 +414,79 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "personal_select".
+ */
+export interface PersonalSelect<T extends boolean = true> {
+  nombre?: T;
+  cargo?: T;
+  area?: T;
+  foto?: T;
+  orden?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "especialistas_select".
+ */
+export interface EspecialistasSelect<T extends boolean = true> {
+  nombre?: T;
+  nivel?: T;
+  foto?: T;
+  presentacion?: T;
+  colegios?:
+    | T
+    | {
+        ubicacion?: T;
+        colegio?: T;
+        nivel_modalidad?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "fortalecimiento_select".
+ */
+export interface FortalecimientoSelect<T extends boolean = true> {
+  titulo?: T;
+  descripcion?: T;
+  fecha?: T;
+  area?: T;
+  tipo?: T;
+  linkRecursos?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "noticias-modal_select".
+ */
+export interface NoticiasModalSelect<T extends boolean = true> {
+  titulo?: T;
+  imagen?: T;
+  activo?: T;
+  orden?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "noticiaintegridads_select".
+ */
+export interface NoticiaintegridadsSelect<T extends boolean = true> {
+  titulo?: T;
+  descripcion?: T;
+  fecha?: T;
+  imagen?: T;
+  area?: T;
+  activo?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
