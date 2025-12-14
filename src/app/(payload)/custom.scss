@@ -1,0 +1,240 @@
+// Colores personalizados de UGEL Ambo
+// Azul principal: #049DD9
+// Azul oscuro: #223F59
+// Fondo: #F2F2F2
+
+:root {
+  // Colores primarios - Azul UGEL
+  --theme-elevation-0: #ffffff;
+  --theme-elevation-50: #f8fafc;
+  --theme-elevation-100: #f1f5f9;
+  --theme-elevation-150: #e2e8f0;
+  --theme-elevation-200: #cbd5e1;
+  --theme-elevation-250: #94a3b8;
+  --theme-elevation-300: #64748b;
+  --theme-elevation-350: #475569;
+  --theme-elevation-400: #334155;
+  --theme-elevation-450: #1e293b;
+  --theme-elevation-500: #0f172a;
+
+  // Color de éxito
+  --theme-success-50: #dcfce7;
+  --theme-success-100: #bbf7d0;
+  --theme-success-500: #22c55e;
+  --theme-success-600: #16a34a;
+
+  // Color de error
+  --theme-error-50: #fef2f2;
+  --theme-error-100: #fee2e2;
+  --theme-error-500: #ef4444;
+  --theme-error-600: #dc2626;
+
+  // Color de advertencia
+  --theme-warning-50: #fffbeb;
+  --theme-warning-100: #fef3c7;
+  --theme-warning-500: #f59e0b;
+  --theme-warning-600: #d97706;
+
+  // Radio de bordes
+  --theme-radius-s: 4px;
+  --theme-radius-m: 8px;
+  --theme-radius-l: 12px;
+}
+
+// Personalización del header de navegación
+.nav-header {
+  background: linear-gradient(135deg, #223f59 0%, #049dd9 100%) !important;
+}
+
+// Personalización de la barra lateral
+.nav {
+  background-color: #049dd9 !important;
+
+  // Títulos de grupos (Colecciones, Contenido, etc.)
+  .nav__group-label,
+  .nav-group__label,
+  .group-label {
+    color: #223f59 !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.5px;
+  }
+
+  .nav__link {
+    color: rgba(255, 255, 255, 0.85) !important;
+
+    &:hover {
+      background-color: rgba(4, 157, 217, 0.3) !important;
+      color: #ffffff !important;
+    }
+
+    &--active {
+      background-color: #049dd9 !important;
+      color: #ffffff !important;
+    }
+  }
+
+  .nav__group-toggle {
+    color: rgba(255, 255, 255, 0.7) !important;
+  }
+}
+
+// Personalización de botones primarios
+.btn {
+  &--style-primary {
+    background-color: #049dd9 !important;
+    border-color: #049dd9 !important;
+    color: #ffffff !important;
+
+    &:hover {
+      background-color: #0388be !important;
+      border-color: #0388be !important;
+    }
+  }
+
+  &--style-secondary {
+    color: #223f59 !important;
+    border-color: #223f59 !important;
+
+    &:hover {
+      background-color: #223f59 !important;
+      color: #ffffff !important;
+    }
+  }
+}
+
+// Personalización de la página de login
+.login {
+  &__card {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.95) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  &__brand {
+    margin-bottom: 24px;
+
+    svg,
+    img {
+      max-height: 60px;
+    }
+  }
+}
+
+// Personalización del header del dashboard
+.app-header {
+  background-color: #ffffff !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+// Personalización de tarjetas y contenedores
+.card {
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+}
+
+// Links y elementos interactivos
+a {
+  color: #049dd9;
+
+  &:hover {
+    color: #0388be;
+  }
+}
+
+// Personalización de checkboxes y radios
+.checkbox__input:checked + .checkbox__icon,
+.radio__input:checked + .radio__icon {
+  background-color: #049dd9 !important;
+  border-color: #049dd9 !important;
+  color: #ffffff !important;
+}
+
+// Personalización de inputs focus
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: #049dd9 !important;
+  box-shadow: 0 0 0 3px rgba(4, 157, 217, 0.15) !important;
+}
+
+// Personalización del dashboard vacío
+.dashboard {
+  .template-default__wrap {
+    background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  }
+}
+
+// Tipografía mejorada
+body {
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    sans-serif !important;
+}
+
+// Estilo para la tabla
+.table {
+  th {
+    background-color: #f8fafc !important;
+    color: #223f59 !important;
+    font-weight: 600 !important;
+  }
+
+  tr:hover td {
+    background-color: rgba(4, 157, 217, 0.05) !important;
+  }
+}
+
+// Badges personalizados
+.pill {
+  border-radius: 20px !important;
+
+  &--style-success {
+    background-color: #dcfce7 !important;
+    color: #16a34a !important;
+  }
+
+  &--style-error {
+    background-color: #fef2f2 !important;
+    color: #dc2626 !important;
+  }
+}
+
+// Botón de logout/salir
+.logout-button,
+button[class*='logout'],
+.account__logout,
+.nav button {
+  color: #ffffff !important;
+
+  &:hover {
+    color: #ffffff !important;
+    opacity: 0.9;
+  }
+}
+
+// Ocultar selector de tema
+.theme-toggle,
+[class*='theme-toggle'],
+[class*='ThemeToggle'],
+.theme-selector,
+[aria-label='Toggle theme'],
+button[title*='tema'],
+button[title*='Theme'],
+.payload-admin--theme,
+.nav [class*='theme'] {
+  display: none !important;
+}
+
+// Asegurar que todos los botones en el nav tengan texto blanco
+.nav button,
+.nav a {
+  color: #ffffff !important;
+}

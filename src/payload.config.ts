@@ -23,6 +23,23 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: ' - UGEL Ambo',
+      description: 'Panel de Administración - Unidad de Gestión Educativa Local de Ambo',
+      icons: [
+        {
+          rel: 'icon',
+          type: 'image/png',
+          url: '/icon-ugel.png',
+        },
+      ],
+    },
+    components: {
+      graphics: {
+        Logo: './components/Logo#Logo',
+        Icon: './components/Icon#Icon',
+      },
+    },
   },
   i18n: {
     supportedLanguages: { es },
