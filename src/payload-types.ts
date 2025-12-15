@@ -155,14 +155,23 @@ export interface User {
   password?: string | null;
 }
 /**
+ * Archivos multimedia almacenados en Cloudinary
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
 export interface Media {
   id: string;
+  /**
+   * Descripción de la imagen para accesibilidad
+   */
   alt: string;
+  cloudinaryPublicId?: string | null;
   updatedAt: string;
   createdAt: string;
+  /**
+   * URL de la imagen en Cloudinary (se genera automáticamente)
+   */
   url?: string | null;
   thumbnailURL?: string | null;
   filename?: string | null;
@@ -266,9 +275,9 @@ export interface Noticiaintegridad {
   descripcion: string;
   fecha: string;
   /**
-   * URL de la imagen que aparecerá en la tarjeta y página de detalle (ej: /ruta/imagen.jpg o URL completa)
+   * Sube una imagen para la noticia (se almacenará en Cloudinary)
    */
-  imagen?: string | null;
+  imagen?: (string | null) | Media;
   /**
    * Área a la que pertenece esta noticia
    */
@@ -403,6 +412,7 @@ export interface UsersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  cloudinaryPublicId?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;

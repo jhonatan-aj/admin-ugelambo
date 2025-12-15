@@ -43,11 +43,11 @@ export const NoticiasIntegridad: CollectionConfig = {
     },
     {
       name: 'imagen',
-      type: 'text',
-      label: 'URL de la Imagen',
+      type: 'upload',
+      relationTo: 'media',
+      label: 'Imagen',
       admin: {
-        description:
-          'URL de la imagen que aparecerá en la tarjeta y página de detalle (ej: /ruta/imagen.jpg o URL completa)',
+        description: 'Sube una imagen para la noticia (se almacenará en Cloudinary)',
       },
     },
     {
