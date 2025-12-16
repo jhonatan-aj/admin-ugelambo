@@ -1,12 +1,17 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateHook'
 
 export const Fortalecimiento: CollectionConfig = {
   slug: 'fortalecimiento',
   labels: { singular: 'Material de Fortalecimiento', plural: 'Materiales de Fortalecimiento' },
-  admin: { 
-    useAsTitle: 'titulo', 
+  admin: {
+    useAsTitle: 'titulo',
     defaultColumns: ['titulo', 'area', 'tipo', 'fecha'],
     group: 'Gestión Pedagógica',
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
   },
   access: {
     read: () => true,
@@ -15,26 +20,26 @@ export const Fortalecimiento: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
-    { 
-      name: 'titulo', 
-      type: 'text', 
+    {
+      name: 'titulo',
+      type: 'text',
       required: true,
       label: 'Título',
     },
-    { 
-      name: 'descripcion', 
+    {
+      name: 'descripcion',
       type: 'textarea',
       label: 'Descripción',
     },
-    { 
-      name: 'fecha', 
-      type: 'date', 
+    {
+      name: 'fecha',
+      type: 'date',
       required: true,
       label: 'Fecha',
     },
     {
-      name: 'area', 
-      type: 'select', 
+      name: 'area',
+      type: 'select',
       required: true,
       label: 'Área/Nivel',
       options: [
@@ -46,8 +51,8 @@ export const Fortalecimiento: CollectionConfig = {
       ],
     },
     {
-      name: 'tipo', 
-      type: 'select', 
+      name: 'tipo',
+      type: 'select',
       required: true,
       label: 'Tipo de Material',
       options: [
@@ -57,9 +62,9 @@ export const Fortalecimiento: CollectionConfig = {
         { label: 'Capacitación', value: 'Capacitacion' },
       ],
     },
-    { 
-      name: 'linkRecursos', 
-      type: 'text', 
+    {
+      name: 'linkRecursos',
+      type: 'text',
       label: 'Link de Recursos',
       admin: {
         description: 'URL de Google Drive u otro servicio de almacenamiento',

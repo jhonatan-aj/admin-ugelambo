@@ -1,12 +1,17 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateHook'
 
 export const Personal: CollectionConfig = {
   slug: 'personal',
   labels: { singular: 'Personal', plural: 'Personal' },
-  admin: { 
-    useAsTitle: 'nombre', 
+  admin: {
+    useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'cargo', 'area', 'orden'],
     group: 'Contenido',
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
   },
   access: {
     read: () => true,
@@ -15,21 +20,21 @@ export const Personal: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
-    { 
-      name: 'nombre', 
-      type: 'text', 
+    {
+      name: 'nombre',
+      type: 'text',
       required: true,
       label: 'Nombre Completo',
     },
-    { 
-      name: 'cargo', 
-      type: 'text', 
+    {
+      name: 'cargo',
+      type: 'text',
       required: true,
       label: 'Cargo/Puesto',
     },
     {
-      name: 'area', 
-      type: 'select', 
+      name: 'area',
+      type: 'select',
       required: true,
       label: 'Área',
       options: [
@@ -40,15 +45,15 @@ export const Personal: CollectionConfig = {
         { label: 'Gestión Pedagógica', value: 'agp' },
       ],
     },
-    { 
-      name: 'foto', 
-      type: 'upload', 
+    {
+      name: 'foto',
+      type: 'upload',
       relationTo: 'media',
       label: 'Foto',
     },
-    { 
-      name: 'orden', 
-      type: 'number', 
+    {
+      name: 'orden',
+      type: 'number',
       defaultValue: 0,
       label: 'Orden de Aparición',
       admin: {

@@ -1,12 +1,17 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateHook'
 
 export const Especialistas: CollectionConfig = {
   slug: 'especialistas',
   labels: { singular: 'Especialista', plural: 'Especialistas' },
-  admin: { 
-    useAsTitle: 'nombre', 
+  admin: {
+    useAsTitle: 'nombre',
     defaultColumns: ['nombre', 'nivel'],
     group: 'Gestión Pedagógica',
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
   },
   access: {
     read: () => true,
@@ -15,15 +20,15 @@ export const Especialistas: CollectionConfig = {
     delete: ({ req }) => req.user?.role === 'admin',
   },
   fields: [
-    { 
-      name: 'nombre', 
-      type: 'text', 
+    {
+      name: 'nombre',
+      type: 'text',
       required: true,
       label: 'Nombre del Especialista',
     },
     {
-      name: 'nivel', 
-      type: 'select', 
+      name: 'nivel',
+      type: 'select',
       required: true,
       label: 'Nivel Educativo',
       options: [
@@ -34,37 +39,37 @@ export const Especialistas: CollectionConfig = {
         { label: 'PRONOI', value: 'pronoi' },
       ],
     },
-    { 
-      name: 'foto', 
-      type: 'upload', 
+    {
+      name: 'foto',
+      type: 'upload',
       relationTo: 'media',
       label: 'Foto',
     },
-    { 
-      name: 'presentacion', 
+    {
+      name: 'presentacion',
       type: 'textarea',
       label: 'Presentación',
     },
     {
-      name: 'colegios', 
-      type: 'array', 
+      name: 'colegios',
+      type: 'array',
       label: 'Colegios Asignados',
       fields: [
-        { 
-          name: 'ubicacion', 
-          type: 'text', 
+        {
+          name: 'ubicacion',
+          type: 'text',
           required: true,
           label: 'Ubicación',
         },
-        { 
-          name: 'colegio', 
-          type: 'text', 
+        {
+          name: 'colegio',
+          type: 'text',
           required: true,
           label: 'Nombre del Colegio',
         },
-        { 
-          name: 'nivel_modalidad', 
-          type: 'text', 
+        {
+          name: 'nivel_modalidad',
+          type: 'text',
           required: true,
           label: 'Nivel/Modalidad',
         },

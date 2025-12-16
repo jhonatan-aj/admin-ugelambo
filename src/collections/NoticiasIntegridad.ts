@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { revalidateAfterChange, revalidateAfterDelete } from '../hooks/revalidateHook'
 
 export const NoticiasIntegridad: CollectionConfig = {
   slug: 'noticiaintegridads', // Debe coincidir con el nombre de colección MongoDB que usa el landing
@@ -8,6 +9,10 @@ export const NoticiasIntegridad: CollectionConfig = {
     defaultColumns: ['titulo', 'fecha', 'area', 'activo'],
     group: 'Contenido',
     description: 'Gestiona las noticias del área de Integridad y Transparencia',
+  },
+  hooks: {
+    afterChange: [revalidateAfterChange],
+    afterDelete: [revalidateAfterDelete],
   },
   access: {
     read: () => true,

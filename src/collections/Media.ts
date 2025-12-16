@@ -11,10 +11,13 @@ export const Media: CollectionConfig = {
   },
   access: {
     read: () => true,
+    create: () => true,
+    update: () => true,
+    delete: () => true,
   },
   hooks: {
     beforeChange: [
-      async ({ data, req }) => {
+      async ({ data, req }: { data: any; req: any }) => {
         if (req.file) {
           const buffer = req.file.data
           const filename = req.file.name
@@ -23,15 +26,13 @@ export const Media: CollectionConfig = {
             const result = await uploadToCloudinary(buffer, filename, 'ugel-admin/media')
 
             // Guardar información de Cloudinary en el documento
+            // NO establecer filename, mimeType, filesize - Payload los maneja internamente
             return {
               ...data,
               url: result.url,
               cloudinaryPublicId: result.publicId,
               width: result.width,
               height: result.height,
-              mimeType: `image/${result.format}`,
-              filesize: buffer.length,
-              filename: filename,
             }
           } catch (error) {
             console.error('Error uploading to Cloudinary:', error)
@@ -42,8 +43,7 @@ export const Media: CollectionConfig = {
       },
     ],
     afterDelete: [
-      async ({ doc }) => {
-        // Eliminar de Cloudinary cuando se elimina el documento
+      async ({ doc }: { doc: any }) => {
         if (doc.cloudinaryPublicId) {
           try {
             await deleteFromCloudinary(doc.cloudinaryPublicId)
@@ -98,34 +98,10 @@ export const Media: CollectionConfig = {
         readOnly: true,
       },
     },
-    {
-      name: 'mimeType',
-      type: 'text',
-      label: 'Tipo MIME',
-      admin: {
-        readOnly: true,
-      },
-    },
-    {
-      name: 'filesize',
-      type: 'number',
-      label: 'Tamaño del Archivo',
-      admin: {
-        readOnly: true,
-      },
-    },
-    {
-      name: 'filename',
-      type: 'text',
-      label: 'Nombre del Archivo',
-      admin: {
-        readOnly: true,
-      },
-    },
   ],
   upload: {
-    disableLocalStorage: true,
     mimeTypes: ['image/*'],
-    adminThumbnail: ({ doc }) => doc?.url as string,
+    adminThumbnail: ({ doc }) => (doc?.url as string) || null,
+    disableLocalStorage: true,
   },
 }
