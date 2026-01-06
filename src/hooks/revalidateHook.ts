@@ -1,6 +1,3 @@
-// Hook de revalidación para llamar al frontend cuando hay cambios en las colecciones
-// Este hook se ejecuta después de crear, actualizar o eliminar un documento
-
 import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
 const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:3000'

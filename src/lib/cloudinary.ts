@@ -1,10 +1,6 @@
 import { v2 as cloudinary } from 'cloudinary'
 
-// Configurar Cloudinary con la URL del entorno
-// CLOUDINARY_URL debe tener el formato: cloudinary://API_KEY:API_SECRET@CLOUD_NAME
 if (process.env.CLOUDINARY_URL) {
-  // Cloudinary SDK lee automáticamente CLOUDINARY_URL
-  // pero para asegurarnos, parseamos la URL si está disponible
   const cloudinaryUrl = process.env.CLOUDINARY_URL
   const regex = /cloudinary:\/\/(\d+):([^@]+)@(.+)/
   const match = cloudinaryUrl.match(regex)

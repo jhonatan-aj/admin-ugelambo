@@ -25,8 +25,6 @@ export const Media: CollectionConfig = {
           try {
             const result = await uploadToCloudinary(buffer, filename, 'ugel-admin/media')
 
-            // Guardar información de Cloudinary en el documento
-            // NO establecer filename, mimeType, filesize - Payload los maneja internamente
             return {
               ...data,
               url: result.url,
