@@ -99,7 +99,7 @@ export default async function HomePage() {
         }}
       >
         {/* Imagen de fondo */}
-        <Image src="/integridad.jpg" alt="UGEL Ambo" fill style={{ objectFit: 'cover' }} priority />
+        <Image src="/integridad.png" alt="UGEL Ambo" fill style={{ objectFit: 'cover' }} priority />
         {/* Overlay oscuro */}
         <div
           style={{
