@@ -75,6 +75,7 @@ export interface Config {
     'noticias-modal': NoticiasModal;
     noticiaintegridads: Noticiaintegridad;
     convocatorias: Convocatoria;
+    tutoriales: Tutoriale;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -90,6 +91,7 @@ export interface Config {
     'noticias-modal': NoticiasModalSelect<false> | NoticiasModalSelect<true>;
     noticiaintegridads: NoticiaintegridadsSelect<false> | NoticiaintegridadsSelect<true>;
     convocatorias: ConvocatoriasSelect<false> | ConvocatoriasSelect<true>;
+    tutoriales: TutorialesSelect<false> | TutorialesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -340,6 +342,35 @@ export interface Convocatoria {
   createdAt: string;
 }
 /**
+ * Gestiona los videos tutoriales para docentes
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tutoriales".
+ */
+export interface Tutoriale {
+  id: string;
+  titulo: string;
+  /**
+   * Breve explicación de lo que trata el tutorial.
+   */
+  descripcion: string;
+  /**
+   * Pega el enlace completo del video o el ID (ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ)
+   */
+  youtubeUrl: string;
+  categoria: 'docentes' | 'directivos' | 'otros';
+  /**
+   * Números menores aparecen primero.
+   */
+  orden?: number | null;
+  /**
+   * Desmarcar para ocultar el tutorial.
+   */
+  activo?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -394,6 +425,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'convocatorias';
         value: string | Convocatoria;
+      } | null)
+    | ({
+        relationTo: 'tutoriales';
+        value: string | Tutoriale;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -575,6 +610,20 @@ export interface ConvocatoriasSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  activo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tutoriales_select".
+ */
+export interface TutorialesSelect<T extends boolean = true> {
+  titulo?: T;
+  descripcion?: T;
+  youtubeUrl?: T;
+  categoria?: T;
+  orden?: T;
   activo?: T;
   updatedAt?: T;
   createdAt?: T;
