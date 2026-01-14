@@ -13,6 +13,7 @@ import { Especialistas } from './collections/Especialistas'
 import { Fortalecimiento } from './collections/Fortalecimiento'
 import { NoticiasModal } from './collections/NoticiasModal'
 import { NoticiasIntegridad } from './collections/NoticiasIntegridad'
+import { Convocatorias } from './collections/Convocatorias'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,6 +54,7 @@ export default buildConfig({
     Fortalecimiento,
     NoticiasModal,
     NoticiasIntegridad,
+    Convocatorias,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

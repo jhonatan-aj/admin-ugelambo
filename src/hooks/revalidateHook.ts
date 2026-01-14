@@ -21,7 +21,6 @@ async function triggerRevalidation(collection: string): Promise<void> {
       console.error(`[Revalidate] Failed for ${collection}:`, response.status)
     }
   } catch (error) {
-    // No lanzar error para no interrumpir el flujo de Payload
     console.error(`[Revalidate] Error triggering revalidation for ${collection}:`, error)
   }
 }
@@ -31,7 +30,6 @@ export const revalidateAfterChange: CollectionAfterChangeHook = async ({
   doc,
   operation,
 }) => {
-  // Solo revalidar en producción o si está configurado
   if (process.env.NODE_ENV === 'production' || process.env.ENABLE_REVALIDATION === 'true') {
     console.log(`[Revalidate] ${operation} on ${collection.slug}: ${doc.id || doc._id}`)
     await triggerRevalidation(collection.slug)
