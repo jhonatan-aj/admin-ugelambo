@@ -37,6 +37,7 @@ export const Especialistas: CollectionConfig = {
         { label: 'Secundaria', value: 'secundaria' },
         { label: 'CEBA', value: 'ceba' },
         { label: 'PRONOI', value: 'pronoi' },
+        { label: 'Convivencia Escolar', value: 'convivencia' },
       ],
     },
     {

@@ -210,7 +210,7 @@ export interface Personal {
 export interface Especialista {
   id: string;
   nombre: string;
-  nivel: 'inicial' | 'primaria' | 'secundaria' | 'ceba' | 'pronoi';
+  nivel: 'inicial' | 'primaria' | 'secundaria' | 'ceba' | 'pronoi' | 'convivencia';
   foto?: (string | null) | Media;
   presentacion?: string | null;
   colegios?:
@@ -233,7 +233,7 @@ export interface Fortalecimiento {
   titulo: string;
   descripcion?: string | null;
   fecha: string;
-  area: 'inicial' | 'primaria' | 'secundaria' | 'pronoi' | 'ceba';
+  area: 'inicial' | 'primaria' | 'secundaria' | 'pronoi' | 'ceba' | 'convivencia';
   tipo: 'Curso' | 'Charla' | 'Taller' | 'Capacitacion';
   /**
    * URL de Google Drive u otro servicio de almacenamiento

@@ -48,6 +48,7 @@ export const Fortalecimiento: CollectionConfig = {
         { label: 'Secundaria', value: 'secundaria' },
         { label: 'PRONOI', value: 'pronoi' },
         { label: 'CEBA', value: 'ceba' },
+        { label: 'Convivencia Escolar', value: 'convivencia' },
       ],
     },
     {
