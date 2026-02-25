@@ -17,14 +17,22 @@ const pushSubscriptionSchema = new mongoose.Schema({
 const PushSubscriptionModel =
   mongoose.models.push_subscriptions || mongoose.model('push_subscriptions', pushSubscriptionSchema)
 
-webpush.setVapidDetails(
-  'mailto:contacto@ugelambo.gob.pe',
-  process.env.VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!,
-)
+let vapidConfigured = false
+
+function ensureVapidConfigured() {
+  if (vapidConfigured) return
+  const publicKey = process.env.VAPID_PUBLIC_KEY
+  const privateKey = process.env.VAPID_PRIVATE_KEY
+  if (!publicKey || !privateKey) {
+    throw new Error('VAPID keys no configuradas')
+  }
+  webpush.setVapidDetails('mailto:soporteugelamboo@gmail.com', publicKey, privateKey)
+  vapidConfigured = true
+}
 
 export async function POST(request: NextRequest) {
   try {
+    ensureVapidConfigured()
     const payload = await getPayload({ config })
     const headersList = await getHeaders()
     const { user } = await payload.auth({ headers: headersList })

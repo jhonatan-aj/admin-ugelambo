@@ -1,11 +1,20 @@
 import type { CollectionBeforeChangeHook } from 'payload'
 import webpush from 'web-push'
 
-webpush.setVapidDetails(
-  'mailto:contacto@ugelambo.gob.pe',
-  process.env.VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!,
-)
+let vapidConfigured = false
+
+function ensureVapidConfigured() {
+  if (vapidConfigured) return true
+  const publicKey = process.env.VAPID_PUBLIC_KEY
+  const privateKey = process.env.VAPID_PRIVATE_KEY
+  if (!publicKey || !privateKey) {
+    console.warn('[Notificaciones] VAPID keys no configuradas, push deshabilitado')
+    return false
+  }
+  webpush.setVapidDetails('mailto:soporteugelamboo@gmail.com', publicKey, privateKey)
+  vapidConfigured = true
+  return true
+}
 
 interface PushSub {
   endpoint: string
@@ -19,6 +28,8 @@ export const enviarNotificacionPush: CollectionBeforeChangeHook = async ({
 }) => {
   // Solo enviar notificaciones al crear una nueva entrada
   if (operation !== 'create') return data
+
+  if (!ensureVapidConfigured()) return data
 
   const { titulo, mensaje } = data
 
