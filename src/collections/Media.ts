@@ -17,7 +17,13 @@ export const Media: CollectionConfig = {
   },
   hooks: {
     beforeChange: [
-      async ({ data, req }: { data: any; req: any }) => {
+      async ({
+        data,
+        req,
+      }: {
+        data: Record<string, unknown>
+        req: { file?: { data: Buffer; name: string } }
+      }) => {
         if (req.file) {
           const buffer = req.file.data
           const filename = req.file.name
@@ -41,10 +47,10 @@ export const Media: CollectionConfig = {
       },
     ],
     afterDelete: [
-      async ({ doc }: { doc: any }) => {
+      async ({ doc }: { doc: Record<string, unknown> }) => {
         if (doc.cloudinaryPublicId) {
           try {
-            await deleteFromCloudinary(doc.cloudinaryPublicId)
+            await deleteFromCloudinary(doc.cloudinaryPublicId as string)
           } catch (error) {
             console.error('Error deleting from Cloudinary:', error)
           }

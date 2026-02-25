@@ -15,6 +15,7 @@ import { NoticiasModal } from './collections/NoticiasModal'
 import { NoticiasIntegridad } from './collections/NoticiasIntegridad'
 import { Convocatorias } from './collections/Convocatorias'
 import { Tutoriales } from './collections/Tutoriales'
+import { Notificaciones } from './collections/Notificaciones'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -57,6 +58,7 @@ export default buildConfig({
     NoticiasIntegridad,
     Convocatorias,
     Tutoriales,
+    Notificaciones,
   ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

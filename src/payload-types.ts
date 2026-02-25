@@ -76,6 +76,7 @@ export interface Config {
     noticiaintegridads: Noticiaintegridad;
     convocatorias: Convocatoria;
     tutoriales: Tutoriale;
+    notificaciones: Notificacione;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -92,6 +93,7 @@ export interface Config {
     noticiaintegridads: NoticiaintegridadsSelect<false> | NoticiaintegridadsSelect<true>;
     convocatorias: ConvocatoriasSelect<false> | ConvocatoriasSelect<true>;
     tutoriales: TutorialesSelect<false> | TutorialesSelect<true>;
+    notificaciones: NotificacionesSelect<false> | NotificacionesSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -371,6 +373,24 @@ export interface Tutoriale {
   createdAt: string;
 }
 /**
+ * Gestiona las notificaciones push enviadas al portal web
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notificaciones".
+ */
+export interface Notificacione {
+  id: string;
+  titulo: string;
+  mensaje: string;
+  /**
+   * Cantidad de suscriptores que recibieron la notificación
+   */
+  enviadoA?: number | null;
+  fallidos?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
@@ -429,6 +449,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'tutoriales';
         value: string | Tutoriale;
+      } | null)
+    | ({
+        relationTo: 'notificaciones';
+        value: string | Notificacione;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -625,6 +649,18 @@ export interface TutorialesSelect<T extends boolean = true> {
   categoria?: T;
   orden?: T;
   activo?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "notificaciones_select".
+ */
+export interface NotificacionesSelect<T extends boolean = true> {
+  titulo?: T;
+  mensaje?: T;
+  enviadoA?: T;
+  fallidos?: T;
   updatedAt?: T;
   createdAt?: T;
 }
